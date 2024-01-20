@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Display</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .card {
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+        }
+
+        .card-img-top {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .headnews{
+           
+            font-size: xx-large;
+            font-weight: bolder;
+            margin-top: 1em;
+            padding-top: 1em;
+           color: black;
+            text-align: center;
+            margin-bottom: 2em;
+          
+            
+        }
+        .body2{
+            background-color: white;
+            border-radius: .2em;
+        }
+    
+    /* Custom loading animation */
+    .loading-balls {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #333;
+        border-radius: 50%;
+        animation: bounce 0.6s infinite alternate;
+        margin-bottom: 10px;
+    }
+
+    @keyframes bounce {
+        to {
+            transform: translateY(-20px);
+        }
+    }
+
+    /* Hide the loading element initially */
+    #loading {
+        display: none;
+    }
+
+
+    </style>
+</head>
+<div class="imageBackground">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+            <!--logo-->
+           
+            <img src="images/logo1.png" alt="OSIM" class="img-fluid">
+            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="sidebar offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">OSIM FOUNDATION</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <!--sidebar-->
+                <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-1">
+                    <ul class="navbar-nav justify-content-center align-items-center fs-6 flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active mx-2" aria-current="page" href="index.html" style="color: white;">Home</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="history.html">Our History</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                    </ul>
+                    <!--login/signup-->
+                    <div class="d-flex flex-column flex-lg-row justfy-content-center align-items-center gap-3">
+                        <a href="#Login" class="text-white">Login</a>
+                        <a href="learning.html" class="text-white text-decoraton-none px-3 py-1 rounded-3"
+                            style="background-color: rgb(153, 42, 138);"
+                        >Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+   
+</div>
+
+<body>
+    <div class="container body2">
+        <div class="container">
+            <h1 class="container headnews"> NEWS AND EVENTS</h1>
+        </div>
+    
+        <div class="container mt-5">
+            <!-- Custom loading element -->
+            <div id="loading" class="text-center">
+                <div class="loading-balls"></div>
+                <p>Loading...</p>
+            </div>
+    
+            <!-- News entries will be displayed here -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" id="news-container">
+                <!-- News entries will be displayed here -->
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script type="module">
+        // Import the Firestore SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+    
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOasmxapL0TtZ9LrdUKbGkDZ9lhqxDuH8",
+            authDomain: "ngos-2024.firebaseapp.com",
+            databaseURL: "https://ngos-2024-default-rtdb.firebaseio.com",
+            projectId: "ngos-2024",
+            storageBucket: "ngos-2024.appspot.com",
+            messagingSenderId: "268085738888",
+            appId: "1:268085738888:web:a0f7e0f8effd9f18580e3d",
+            measurementId: "G-BDXMXZ76SJ"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const firestore = getFirestore(app);
+    
+        // Reference to the news container and loading element
+        const newsContainer = document.getElementById("news-container");
+        const loadingElement = document.getElementById("loading");
+    
+        // Function to fetch and display news entries
+        function fetchAndDisplayNews() {
+            loadingElement.style.display = "block"; // Show loading element
+    
+            // Instead of using the Realtime Database, use Firestore collection reference
+            const newsRef = collection(firestore, "news");
+    
+            // Use onSnapshot to listen to real-time updates
+            onSnapshot(newsRef, (querySnapshot) => {
+                loadingElement.style.display = "none"; // Hide loading element
+    
+                const newsData = [];
+                querySnapshot.forEach((doc) => {
+                    newsData.push(doc.data());
+                });
+    
+                // Display the news entries
+                displayNews(newsData);
+            });
+        }
+    
+        // Function to display news entries
+        function displayNews(newsData) {
+            newsContainer.innerHTML = ""; // Clear previous news entries
+    
+            newsData.forEach((newsEntry) => {
+                const newsCard = createNewsCard(newsEntry);
+                newsContainer.appendChild(newsCard);
+            });
+        }
+    
+        // Function to create a news card
+        function createNewsCard(newsEntry) {
+            const newsCard = document.createElement("div");
+            newsCard.className = "card mb-3";
+    
+            // Create an image element for the news card
+            if (newsEntry.imageUrl) {
+                const image = document.createElement("img");
+                image.src = newsEntry.imageUrl;
+                image.className = "card-img-top";
+                newsCard.appendChild(image);
+            }
+    
+            // Create the card body
+            const cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+    
+            // Add the title
+            const title = document.createElement("h5");
+            title.className = "card-title";
+            title.textContent = newsEntry.title;
+            cardBody.appendChild(title);
+    
+            // Create the mini-title
+            const miniTitle = document.createElement("p");
+            miniTitle.className = "card-subtitle mb-2 text-muted";
+            miniTitle.textContent = newsEntry.miniTitle || "Mini Title";
+            cardBody.appendChild(miniTitle);
+    
+            // Create the content
+            const content = document.createElement("p");
+            content.className = "card-text";
+            content.style.display = "none"; // Initially hide content
+            content.textContent = newsEntry.content;
+            cardBody.appendChild(content);
+    
+            // Attach a click event to open the news_detail.html page in the same tab with data
+            newsCard.addEventListener("click", function () {
+                // Encode data to pass it as a URL parameter
+                const data = btoa(JSON.stringify(newsEntry));
+                const url = `news_detail.html?data=${data}`;
+                window.location.href = url;
+            });
+    
+            newsCard.appendChild(cardBody);
+            return newsCard;
+        }
+    
+        // Call the function to fetch and display news entries
+        fetchAndDisplayNews();
+    </script>
+    
+    
+</body>
+</html>

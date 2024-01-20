@@ -1,0 +1,62 @@
+<!-- payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pay with PayPal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h2 class="text-center mb-4">Pay with PayPal</h2>
+
+        <div class="text-center mb-4">
+            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-medium.png" alt="PayPal" class="img-fluid">
+        </div>
+
+        <div class="mb-3">
+            <label for="amount" class="form-label">Select an amount:</label>
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-primary" onclick="setAmount(20)">$20</button>
+                <button type="button" class="btn btn-outline-primary" onclick="setAmount(30)">$30</button>
+                <button type="button" class="btn btn-outline-primary" onclick="setAmount(50)">$50</button>
+                <button type="button" class="btn btn-outline-primary" onclick="setAmount(80)">$80</button>
+                <button type="button" class="btn btn-outline-primary" onclick="setAmount(100)">$100</button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="customAmount" class="form-label">Or enter a custom amount:</label>
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" id="customAmount" placeholder="Enter amount">
+            </div>
+        </div>
+
+        <form action="/execute" method="POST">
+            <input type="hidden" name="paymentID" value="{{paymentId}}">
+            <input type="hidden" name="payerID" value="{{PayerID}}">
+            <input type="hidden" name="amount" id="paymentAmount" value="">
+
+            <button type="submit" class="btn btn-success btn-lg btn-block">Pay with PayPal</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function setAmount(amount) {
+        document.getElementById('customAmount').value = '';
+        document.getElementById('paymentAmount').value = amount;
+        const buttons = document.querySelectorAll('.btn-group button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        const selectedButton = Array.from(buttons).find(btn => btn.innerText == `$${amount}`);
+        selectedButton.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

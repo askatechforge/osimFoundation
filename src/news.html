@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Publishing</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-storage.js";
+    
+        // Rest of your code...
+    </script>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="NewsForm" >
+                    <div class="mb-3">
+                        <label for="newsTitle" class="form-label">News Title</label>
+                        <input type="text" class="form-control" id="newsTitle" placeholder="Enter news title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="miniTitle" class="form-label">Mini Title</label>
+                        <input type="text" class="form-control" id="miniTitle" placeholder="Enter mini title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newsContent" class="form-label">News Content</label>
+                        <textarea id="newsContent" class="form-control" rows="4" style="min-height: 200px;"></textarea>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-secondary" onclick="document.execCommand('bold', false, null)">Bold</button>
+                            <button type="button" class="btn btn-secondary" onclick="document.execCommand('italic', false, null)">Italic</button>
+                            <label for="textColor" class="form-label">Text Color:</label>
+                            <input type="color" id="textColor">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newsImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="newsImage">
+                    </div>
+
+                    <!-- Add a hidden input field to store the image URL -->
+                    <input type="hidden" id="imageUrl" name="imageUrl">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Publish News</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <!-- Display a preview of the news post -->
+                <div class="card">
+                    <img id="previewImage" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 id="previewTitle" class="card-title">News Title</h5>
+                        <p id="previewMiniTitle" class="card-text">Mini Title: This is a sample mini title.</p>
+                        <p id="previewContent" class="card-text">News Content: This is a sample news content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+   
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
+
+        // Your Firebase configuration (replace with your own config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOasmxapL0TtZ9LrdUKbGkDZ9lhqxDuH8",
+            authDomain: "ngos-2024.firebaseapp.com",
+            databaseURL: "https://ngos-2024-default-rtdb.firebaseio.com",
+            projectId: "ngos-2024",
+            storageBucket: "ngos-2024.appspot.com",
+            messagingSenderId: "268085738888",
+            appId: "1:268085738888:web:a0f7e0f8effd9f18580e3d",
+            measurementId: "G-BDXMXZ76SJ"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Form submission event handler
+        const signupForm = document.getElementById("NewsForm");
+        const signupButton = document.getElementById("submitButton");
+
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent the default form submission behavior
+
+            // Collect form data
+            const heading = document.getElementById("newsTitle").value;
+            const miniTitle = document.getElementById("miniTitle").value;
+            const content = document.getElementById("newsContent").value;
+            const fileInput = document.getElementById("newsImage");
+            const imageFile = fileInput.files[0];
+
+            try {
+                // Upload image to Firebase Storage
+                const storageRef = ref(storage, `images/${imageFile.name}`);
+                await uploadBytes(storageRef, imageFile);
+
+                // Get the download URL of the uploaded image
+                const imageUrl = await getDownloadURL(storageRef);
+
+                // Save data to Firestore with the image URL
+                await addDoc(collection(db, "news"), {
+                    heading: heading,
+                    miniTitle: miniTitle,
+                    content: content,
+                    imageUrl: imageUrl
+                });
+
+                // Data saved successfully
+                alert("Data saved successfully!");
+
+                // Clear form fields
+                signupForm.reset();
+
+                // Optionally, you can redirect the user to a different page
+                // window.location.href = "index.html"; // Replace with your success page URL
+            } catch (error) {
+                // Handle errors
+                console.error("Error saving data:", error.message);
+                alert("Error saving data: " + error.message);
+            }
+        });
+        function previewImage() {
+        const input = document.getElementById('newsImage');
+        const preview = document.getElementById('previewImage');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Function to update the preview content
+    function updatePreview() {
+        const title = document.getElementById('newsTitle').value;
+        const miniTitle = document.getElementById('miniTitle').value;
+        const content = document.getElementById('newsContent').value;
+        const textColor = document.getElementById('textColor').value;
+
+        document.getElementById('previewTitle').innerText = title;
+        document.getElementById('previewMiniTitle').innerText = `Mini Title: ${miniTitle}`;
+        document.getElementById('previewContent').innerText = `News Content: ${content}`;
+        document.getElementById('previewContent').style.color = textColor;
+    }
+
+    // Attach event listeners for input changes
+    document.getElementById('newsTitle').addEventListener('input', updatePreview);
+    document.getElementById('miniTitle').addEventListener('input', updatePreview);
+    document.getElementById('newsContent').addEventListener('input', updatePreview);
+    document.getElementById('textColor').addEventListener('input', updatePreview);
+    document.getElementById('newsImage').addEventListener('change', previewImage);
+    </script>
+    
+    
+</body>
+</html>
+   
+

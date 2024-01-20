@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <title>Bootstrap Layout</title>
+  <style>
+    /* Add custom styles here if needed */
+    .content {
+      height: 500px; /* Adjust the height as needed */
+    }
+
+    .image {
+      height: 500px; /* Keep the same height as content */
+      width: 100%; /* Make the image take the full width of its container */
+      object-fit: cover; /* Maintain the aspect ratio of the image */
+    }
+
+    /* Add margin to the first content section */
+    .first-content {
+      margin-bottom: 20px; /* Adjust the margin as needed */
+    }
+    .projectCont {
+  text-align: justify;
+  width: 100%;
+  height: auto;
+
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="imageBackground">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+            <!--logo-->
+           
+            <img src="images/logo1.png" alt="OSIM" class="img-fluid">
+            <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="sidebar offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">OSIM FOUNDATION</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <!--sidebar-->
+                <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-1">
+                    <ul class="navbar-nav justify-content-center align-items-center fs-6 flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active mx-2" aria-current="page" href="index.html" style="color: white;">Home</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                          <a class="nav-link" href="history.html">Our History</a>
+                      </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item mx-2 dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="button" id="aboutUsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                              About Us
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="aboutUsDropdown">
+                              <li><a class="dropdown-item" href="ourTeam.html">Our Team</a></li>
+                              <li><a class="dropdown-item" href="project.html">Our Work</a></li>
+                             
+                          </ul>
+                      </li>
+                    </ul>
+                    <!--login/signup-->
+                    <div class="d-flex flex-column flex-lg-row justfy-content-center align-items-center gap-3">
+                        <a href="#Login" class="text-white">Login</a>
+                        <a href="learning.html" class="text-white text-decoraton-none px-3 py-1 rounded-3"
+                            style="background-color: rgb(153, 42, 138);"
+                        >Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+   
+</div>
+<div class="container  p-5 text-center">
+  <h1 class="display-3">OUR HISTORY</h1>
+ 
+ 
+</div>
+<div class="container mt-4">
+
+    <!-- First content with image at left and content at right -->
+   
+    <div class="col-md-12">
+      <div class="content bg-light p-3">
+        <p class="projectCont" id="projectCont1">
+
+          OSIM FOUNDATION: was formed in 2018 aiming at improving maternal and child health, sanitary pad project, implementing nutritional program, women empowerment in  far unreached communities of Arusha region in Tanzania through health education and promoting health seeking behavior for communities living in marginalized areas. The organization is formed to deal with prevention of maternal and under five mortalities, promoting health seeking behavior across communities in many undeserved families of Maasai villages and interventions that address multiple dimensions of poverty through socio-economic empowerments programs and projects. 
+        </p>
+       <p>
+          "When Pendo was doing her master research project on birth preparedness and complication readiness among pregnant women in far reached communities in longido districts Arusha-Tanzania, she observed that there is higher maternal and under five mortalities due to various factors like few health facilities which make a pregnant women work for 6hrs by foot seeking for health service, when interviewing the women many preferred to deliver at home or attend to traditional birth attendants due to long distance to health facilities and no public transport either private transport is motorcycle and they couldn’t afford due  to poverty, when complication arise at home many lost their lives 
+          Pendo is also a maasai girl who was rescued from social cultural and only girl who have gone to higher school her village so she understands very well how women and young girls are marginalized in the Maasai, she is well familiar how young girls are struggling very hard to go to school because maasai understand that education is only served for boy and girls are send to her husband in young age of 11-15yrs, dowry is more considered than education.
+          During her studies in master of public health , she meet with one friend an American guy Melfard sorell in dar es salaam who received several projects and  showed the interest in sanitary pad to young girls coming from poor families of maasai , the story touched him due to the facts that many young ladies drop out from school due lack of menstruation management most use pieces of clothes , cow dang to manage their menstrual which lead to embarrassment when leak during school moment. When girls drop out school the parents won’t bother them because they already get dowry of cows so they sent them to already chosen man to marry her.
+          Melfard sorell agreed to sponsor and support young girls get sanitary pads, pants and soap to manage their menstruation while looking other ways of implementing other projects to serve marginalized women living in far unreached area to promote and improve health in multidimensional and inspire hope for better health to everyone 
+          
+          ."
+        </p>
+      </div>
+    </div>
+
+    <!-- Second content with image at right and content at left -->
+   
+   
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+          document.addEventListener('DOMContentLoaded', function () {
+        // Get all links with the class 'scroll-to-contact'
+        var contactLinks = document.querySelectorAll('.scroll-to-contact');
+
+        // Add click event listeners to each link
+        contactLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Get the target section's class from the link's href attribute
+                var targetClass = link.getAttribute('href').substring(1);
+
+                // Use the target class to find the corresponding element (assuming there's only one element with the class)
+                var targetElement = document.querySelector('.' + targetClass);
+
+                if (targetElement) {
+                    // Scroll to the target element with a smooth transition
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>

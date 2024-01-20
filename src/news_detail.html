@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Detail</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .displaynews {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #title {
+            color: black;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #image {
+            max-height: 400px;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #miniTitle {
+            color: #007bff;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        #content {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container displaynews">
+        <!-- Bootstrap classes added here -->
+        <h1 id="title" class="display-1 container"></h1>
+        <img id="image" class="img-fluid rounded">
+        <h3 id="miniTitle" class="text-primary"></h3>
+        <p id="content"></p>
+    </div>
+
+    <!-- Retrieve the data from the URL parameter and decode it -->
+    <script>
+        const params = new URLSearchParams(location.search);
+        if (params.has("data")) {
+            const data = params.get("data");
+            const newsEntry = JSON.parse(atob(data));
+
+            // Assign values to HTML elements using IDs
+            document.getElementById("title").textContent = newsEntry.title;
+            document.getElementById("image").src = newsEntry.imageUrl;
+            document.getElementById("miniTitle").textContent = newsEntry.miniTitle;
+            document.getElementById("content").textContent = newsEntry.content;
+        }
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

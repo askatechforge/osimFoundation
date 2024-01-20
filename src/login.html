@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <!-- Add Bootstrap CSS Link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Add Bootstrap Icons CSS Link -->
+  <link rel="stylesheet" href="bootstrap-icons-1.11.1/bootstrap-icons.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Login
+          </div>
+          <div class="card-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-key"></i></span>
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+              <div class="text-center mt-3">
+                <p>Or</p>
+                <a href="#" class="btn btn-danger">
+                  <i class="bi bi-google"></i> Sign in with Google
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Firebase and Bootstrap JS Links -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Add Firebase SDK and Configuration -->
+  <script type="module">
+
+
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+// Import your Firebase configuration
+
+// Initialize Firebase with your configuration
+const firebaseConfig = {
+            apiKey: "AIzaSyAOasmxapL0TtZ9LrdUKbGkDZ9lhqxDuH8",
+            authDomain: "ngos-2024.firebaseapp.com",
+            databaseURL: "https://ngos-2024-default-rtdb.firebaseio.com",
+            projectId: "ngos-2024",
+            storageBucket: "ngos-2024.appspot.com",
+            messagingSenderId: "268085738888",
+            appId: "1:268085738888:web:a0f7e0f8effd9f18580e3d",
+            measurementId: "G-BDXMXZ76SJ"
+        };
+
+// Create a reference to the Firebase authentication service
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Form submission event handler
+const loginForm = document.getElementById("loginForm");
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault(); // Prevent the default form submission behavior
+
+  // Collect form data
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    // Sign in with email and password
+    await signInWithEmailAndPassword(auth, email, password);
+
+    // User is signed in successfully
+    console.log("User signed in successfully!");
+
+ 
+   // After signing in successfully
+sessionStorage.setItem("userEmail", email);
+
+
+    // Optionally, you can redirect the user to a different page
+    window.location.href = "index.html"; // Replace with your dashboard page URL
+  } catch (error) {
+    // Handle errors
+    console.error("Error signing in:", error.message);
+    alert("Error signing in: " + error.message);
+  }
+});
+
+  </script>
+   <script src="firebaseConfig.js"></script>
+</body>
+</html>

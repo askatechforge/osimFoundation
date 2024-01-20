@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="bootstrap-icons-1.11.1/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+
+  <style>
+    .bi {
+      color: #4285F4; /* Change this to your desired color */
+      font-size: 24px; /* Change this to your desired font size */
+    }
+  </style>
+  <title>Sign Up Form</title>
+</head>
+<body>
+  <div class="imageBackground">
+    <!-- Your existing navbar code here -->
+  </div>
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="signup p-4">
+          <h2 class="mb-4 text-center">Sign Up</h2>
+          <form id="signupForm">
+            <div class="row">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="firstName" placeholder=" " required>
+                  <label for="firstName">First name</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="lastName" placeholder=" " required>
+                  <label for "lastName">Last name</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" placeholder=" " required>
+              <label for="email">Enter email</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="tel" class="form-control" id="phoneNumber" placeholder=" " required>
+              <label for="phoneNumber">Enter phone number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="country" placeholder=" " required>
+              <label for="country">Enter country</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder=" " required>
+              <label for="password">Enter password</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="confirmPassword" placeholder=" " required>
+              <label for="confirmPassword">Confirm password</label>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary" id="signupButton">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your HTML script tags for other dependencies -->
+ <!-- Your HTML code remains the same -->
+
+<!-- Your HTML script tags for other dependencies -->
+<script src="js/bootstrap.min.js"></script>
+<script type="module">
+  // Import Firebase Authentication and Firestore SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+  // Your Firebase configuration (replace with your own config)
+  const firebaseConfig = {
+  apiKey: "AIzaSyAOasmxapL0TtZ9LrdUKbGkDZ9lhqxDuH8",
+  authDomain: "ngos-2024.firebaseapp.com",
+  databaseURL: "https://ngos-2024-default-rtdb.firebaseio.com",
+  projectId: "ngos-2024",
+  storageBucket: "ngos-2024.appspot.com",
+  messagingSenderId: "268085738888",
+  appId: "1:268085738888:web:a0f7e0f8effd9f18580e3d",
+  measurementId: "G-BDXMXZ76SJ"
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Form submission event handler
+  const signupForm = document.getElementById("signupForm");
+  const signupButton = document.getElementById("signupButton");
+
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    // Collect form data
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const phoneNumber = document.getElementById("phoneNumber").value;
+    const country = document.getElementById("country").value;
+
+    try {
+      // Create a new user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save additional user data to Firestore
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        email: user.email,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        country: country
+      });
+
+      // User is registered successfully
+      console.log("User registered successfully!");
+     
+
+      // Optionally, you can redirect the user to a different page
+      window.location.href = "index.html"; // Replace with your success page URL
+    } catch (error) {
+      // Handle errors
+      console.error("Error registering user:", error.message);
+      alert("Error registering user: " + error.message);
+    }
+  });
+</script>

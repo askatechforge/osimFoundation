@@ -1,0 +1,174 @@
+.selector-for-some-widget {
+    box-sizing: content-box;
+  }
+body{
+   
+    margin: 0;
+    background-color: rgb(245, 232, 214);
+   
+}
+
+
+.navbar-brand,
+.nav-link,
+.dropdown-toggle,
+.offcanvas-title {
+    color: white;
+}
+@media (max-width: 991px) {
+    .sidebar{
+        background-color: rgb(225, 225, 225, 0.15);
+        backdrop-filter: blur(10px);
+    }
+  
+}
+@media (min-width: 992px) {
+    #carouselExampleIndicators {
+        max-width: 100%;
+       
+        margin: 0 auto;
+    }
+    .carousel-inner .carousel-item img {
+        max-width: 100%;
+        height: 35em;
+    }
+}
+.navbar-toggler-icon {
+    background-color:transparent;
+    color: white; /* Change the color of the hamburger lines to white */
+}
+.headd{
+    margin-top: 2em;
+    color: white;
+    
+}
+header, p {
+    color: black;
+}
+.information {
+    background-image: url('images/brennan-ehrhardt-HALe2SmkWAI-unsplash.jpg'); /* Add your background image */
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+.information h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.carousel{
+    border-radius: 1em;
+   
+}
+.carousel-inner{
+    border-radius: 1em;
+   
+}
+.imageBackground {
+    background-image: url('images/brennan-ehrhardt-HALe2SmkWAI-unsplash.jpg'); /* Add your background image */
+    background-size: cover;
+}
+
+.navbar{
+  
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 2em;
+}
+.para {
+    font-size: 1.2rem;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+.information p {
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+   /* Custom CSS to make images perfectly circular */
+   .card-img-top.circular {
+    width: 200px; /* Adjust the size to your preference */
+    height: 200px; /* Keep width and height the same for a perfect circle */
+    border-radius: 50%; /* Make the image perfectly circular */
+    object-fit: cover; /* Maintain aspect ratio and crop as needed */
+}
+.card {
+    border: none; /* Remove the card border */
+    overflow: hidden;
+    padding-top: 2em;
+   background-color: beige;
+}
+.myBody{
+    margin-top: 5em;
+    padding-bottom: 2em;
+  
+}
+.card-title{
+    margin-top: 1em;
+   color: black;
+   font-weight: bold;
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.card-text{
+    text-align: justify;
+    text-justify: inter-word;
+}
+.aboutUs{
+    margin-right: .6em;
+    font-style: normal;
+    white-space: nowrap;
+    text-decoration-line: none;
+
+  
+
+}
+.bi{
+    font-size: 1.5em;
+}
+.down{
+    color: white;
+}
+.downUs{
+    background-color: rgb(247, 217, 181);
+    color: black;
+}
+.me{
+    background-color: rgb(247, 217, 181);
+    padding-bottom: 3em;
+}
+.hidden {
+    display: none;
+  }
+  .display-5{
+    color: black;
+    margin-top: 1em;
+  }
+  .list-unstyled{
+    color: black;
+  }
+    /* Override Bootstrap Dropdown Styles */
+    .navbar-dark .navbar-nav .nav-link {
+        color: white; /* Set text color to white */
+    }
+
+    .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+        background-color: rgb(171, 189, 189); /* Set dropdown menu background to transparent on hover */
+    }
+
+    .navbar-dark .navbar-nav .nav-item.dropdown .dropdown-menu {
+        background-color: rgb(171, 189, 189); /* Set default dropdown menu background to transparent */
+        border: none; /* Remove border */
+    }
+
+    .navbar-dark .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
+        color: black; /* Set text color of dropdown items to white */
+    }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="bootstrap-icons-1.11.1/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+
+  <style>
+    .bi {
+      color: #4285F4; /* Change this to your desired color */
+      font-size: 24px; /* Change this to your desired font size */
+    }
+  </style>
+  <title>Sign Up Form</title>
+</head>
+<body>
+  <div class="imageBackground">
+    <!-- Your existing navbar code here -->
+  </div>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="signup p-4">
+          <h2 class="mb-4 text-center">Sign Up</h2>
+          <form id="signupForm" method="POST">
+            <div class="row">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="firstName" placeholder=" " required>
+                  <label for="firstName">First name</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="lastName" placeholder=" " required>
+                  <label for "lastName">Last name</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="username" placeholder=" " required>
+              <label for="username">Enter email</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="tel" class="form-control" id="phoneNumber" placeholder=" " required>
+              <label for="phoneNumber">Enter phone number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="country" placeholder=" " required>
+              <label for="country">Enter country</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder=" " required>
+              <label for="password">Enter password</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="confirmPassword" placeholder=" " required>
+              <label for="confirmPassword">Confirm password</label>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+
+            <div class="text-center mt-3">
+              <a href="#" class="btn btn-light" onclick="signInWithGoogle()">
+                <i class="bi bi-google"></i> Sign Up with Google
+              </a>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script >
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js';
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js';
+  
+    // Your web app's Firebase configuration
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+    apiKey: "AIzaSyBLVqITwK_qkZmrh0REf1tYUOM5aa3pp-I",
+    authDomain: "ustawi-jamii3.firebaseapp.com",
+    databaseURL: "https://ustawi-jamii3-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "ustawi-jamii3",
+    storageBucket: "ustawi-jamii3.appspot.com",
+    messagingSenderId: "591577241991",
+    appId: "1:591577241991:web:90870995b31adf4057db22"
+  };
+  
+    // Initialize Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+  
+    // Function to handle Google Sign-In
+    function signInWithGoogle() {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // Handle successful sign-in, e.g., redirect to a dashboard or perform other actions.
+          console.log("Signed in with Google:", result.user.displayName);
+        })
+        .catch((error) => {
+          // Handle sign-in errors, e.g., display an error message.
+          console.error("Google Sign-In error:", error);
+        });
+    }
+  </script>
+  
+</body>
+</html>
